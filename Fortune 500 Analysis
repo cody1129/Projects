@@ -1,0 +1,45 @@
+-- Create a table showing how much maternity leave a company has and rate them from 1 to 5 in descending order
+SELECT company_name, maternity_leave_weeks,
+CASE WHEN maternity_leave_weeks=16 THEN "5"
+WHEN maternity_leave_weeks>=14 THEN "4"
+WHEN maternity_leave_weeks>=12 THEN "3"
+WHEN maternity_leave_weeks>=9 THEN "2"
+ELSE "1"
+END AS " Score for Best Place to Work"
+FROM fortune_companies
+ORDER BY maternity_leave_weeks desc
+;
+
+-- Create a table showing employee tenure having more than 4 years and round to the nearest whole number in ascending order
+SELECT company_name, employees,
+ROUND (avg_employee_tenure) AS avg_employee_tenure
+FROM fortune_companies
+GROUP BY avg_employee_tenure
+HAVING avg_employee_tenure>=5
+;
+
+-- Create a table showing which companies have health insurance and which also offer the best maternity leave in descending order
+SELECT company_name, maternity_leave_weeks, healthcare_benefits
+FROM fortune_companies
+WHERE healthcare_benefits=1 AND maternity_leave_weeks>=14
+ORDER BY maternity_leave_weeks desc
+;
+
+-- Create a table showing the number of employees and the revenue that is brought in for each company in descending order
+SELECT company_name, employees, revenue
+FROM fortune_companies
+ORDER BY company_name desc
+;
+
+-- Create a table showing the revenue a company brings in within each industry and the amount of paid time off that's offered rating them from 1 to 5 in descending order
+SELECT industry, revenue, MAX (paid_time_off_days),
+CASE WHEN paid_time_off_days>=21 THEN "5"
+WHEN paid_time_off_days>=19 THEN "4"
+WHEN paid_time_off_days>=17 THEN "3"
+WHEN paid_time_off_days>=15 THEN "2"
+ELSE "1"
+END AS "BEST PTO Industries"
+FROM fortune_companies
+GROUP BY industry
+ORDER BY industry, revenue
+;
