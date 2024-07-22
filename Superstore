@@ -3,4 +3,4 @@ FROM superstore
 WHERE category="Kitchen Supplies"
 GROUP BY price
 ORDER BY price ASC
-
+;
